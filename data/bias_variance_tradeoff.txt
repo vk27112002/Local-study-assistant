@@ -1,0 +1,22 @@
+Bias-Variance Tradeoff
+
+The bias-variance tradeoff is a central concept in supervised learning that explains the sources of prediction error in a model.
+
+Bias refers to the error introduced by approximating a real-world problem, which may be complex, with a simplified model. High-bias models make strong assumptions about the underlying data and tend to underfit. A linear regression model applied to a strongly nonlinear relationship is a classic example of high bias.
+
+Variance refers to the error introduced by a model's sensitivity to small fluctuations in the training set. High-variance models fit the training data very closely, including its noise, and tend to overfit. Deep decision trees grown without pruning are a classic example of high variance.
+
+The total expected prediction error can be decomposed as:
+Expected Error = Bias^2 + Variance + Irreducible Error
+
+Irreducible error comes from noise inherent in the data-generating process and cannot be reduced by any model.
+
+As model complexity increases, bias typically decreases while variance increases. The goal of model selection is to find the sweet spot that minimizes total error, not to minimize bias or variance individually.
+
+Common techniques to manage the tradeoff:
+- Regularization (L1/L2 penalties) reduces variance by shrinking coefficients, at the cost of some bias.
+- Cross-validation helps estimate out-of-sample error and select the right complexity level.
+- Ensemble methods like bagging (e.g., Random Forests) reduce variance by averaging over many high-variance base learners.
+- Boosting reduces bias by sequentially fitting models to residual errors, though it can increase variance if not controlled (e.g., via learning rate and tree depth limits).
+
+In practice, the tradeoff is diagnosed using learning curves: a large gap between training and validation error suggests high variance (overfitting), while high error on both suggests high bias (underfitting).

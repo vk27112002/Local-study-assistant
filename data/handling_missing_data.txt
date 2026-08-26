@@ -1,0 +1,19 @@
+Handling Missing Data in Datasets
+
+Missing data is a near-universal problem in real-world datasets, and how it is handled can materially change downstream model results. The first step is understanding the missingness mechanism.
+
+Three standard categories describe missingness mechanisms:
+- MCAR (Missing Completely At Random): the probability of a value being missing is unrelated to any observed or unobserved data. This is the easiest case, but also the least common in practice.
+- MAR (Missing At Random): the probability of missingness depends on observed variables but not on the missing value itself. For example, income may be missing more often for younger respondents, but conditional on age, missingness is random.
+- MNAR (Missing Not At Random): the probability of missingness depends on the missing value itself, such as high earners being less likely to report income. This is the hardest case to handle correctly.
+
+Diagnosing the missingness mechanism often involves testing whether missingness in one variable is statistically associated with other variables in the dataset. For a numeric variable's missingness indicator against another numeric variable, point-biserial correlation can be used. For missingness against a categorical variable, Cramer's V is a useful association measure. Strong associations suggest the data is not MCAR and that a more careful imputation strategy is needed.
+
+Common handling strategies, roughly in order of sophistication:
+1. Listwise deletion: drop any row with a missing value. Simple, but can introduce bias if data is not MCAR and can waste large amounts of data.
+2. Mean/median/mode imputation: fast but distorts variance and correlations between variables.
+3. K-Nearest Neighbors imputation: fills missing values based on similar rows, preserving more of the multivariate structure than simple imputation.
+4. Multiple Imputation by Chained Equations (MICE): generates several plausible imputed datasets and pools results, explicitly accounting for imputation uncertainty.
+5. Model-based imputation: using a predictive model trained on complete cases to predict missing values, useful when missingness is MAR and correlated with observed features.
+
+The right approach depends on both the mechanism and the amount of missingness. A rule of thumb some practitioners use is to be cautious with imputation once a variable exceeds roughly 30-40% missingness, since imputed values start to dominate the variable's information content.

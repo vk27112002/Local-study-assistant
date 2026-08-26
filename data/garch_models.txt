@@ -1,0 +1,19 @@
+GARCH Models for Volatility Modeling
+
+Generalized Autoregressive Conditional Heteroskedasticity (GARCH) models are used to model time-varying volatility in financial time series, where periods of high volatility tend to cluster together.
+
+The basic GARCH(1,1) model specifies the conditional variance as:
+sigma_t^2 = omega + alpha * epsilon_(t-1)^2 + beta * sigma_(t-1)^2
+
+Here, omega is a constant, alpha captures the reaction of volatility to recent shocks (the ARCH term), and beta captures the persistence of volatility (the GARCH term). For the model to be stationary, alpha + beta must be less than 1. Values of alpha + beta close to 1 indicate high volatility persistence, meaning shocks take a long time to decay.
+
+An ARCH(1) model is a restricted case of GARCH(1,1) where beta = 0, meaning volatility depends only on the most recent squared shock and not on its own past values. A likelihood-ratio test comparing ARCH(1) against GARCH(1,1) can determine whether the additional GARCH term is statistically justified, or whether the simpler ARCH(1) specification is preferred by the data.
+
+Extensions of the base model include:
+- EGARCH, which models the log of variance and allows for asymmetric effects (leverage effect), where negative shocks increase volatility more than positive shocks of the same magnitude.
+- GARCH-X, which incorporates exogenous variables (such as event dummies or macroeconomic indicators) into the variance equation.
+- Markov-Switching GARCH, which allows model parameters to switch between distinct volatility regimes (e.g., calm vs turbulent markets).
+
+Before fitting a GARCH model, analysts typically test for structural breaks (using tests like the Chow test or CUSUM test) to check whether a single set of parameters is appropriate across the full sample, or whether the series should be split into separate regimes.
+
+Once fitted, GARCH models are commonly used to compute Value-at-Risk (VaR), a risk measure representing the maximum expected loss at a given confidence level over a given time horizon. Basel-style backtesting compares the number of actual VaR breaches against the expected number implied by the confidence level to assess model adequacy.
